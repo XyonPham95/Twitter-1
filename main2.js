@@ -229,7 +229,7 @@ let render = (array) => {
                               <div class="">
                               <span id="likeButton" onclick="likeTweet(${ParentsTweet.id})">${ParentsTweet.likeButtonDisplay}</span>
                               <span id="disLikeButton" onclick="disLike(${ParentsTweet.id})">${ParentsTweet.disLikeButtonDisplay}</span>
-                              <button type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Reply</button>
+                              <button onclick="reTweetInputPopUp(${ParentsTweet.id})"type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Reply</button>
                                   <button onclick="shareTweet(${ParentsTweet.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Everyone should see this</button>
                               </div>
                           </div>
