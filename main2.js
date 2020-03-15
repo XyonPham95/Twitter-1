@@ -94,7 +94,7 @@ let likeTweet = (TweetID) => {
     sourceTweetData[tweetIndex].likestatus = !sourceTweetData[tweetIndex].likestatus;
     // console.log(sourceTweetData);
     if (sourceTweetData[tweetIndex].likestatus) { sourceTweetData[tweetIndex].likeButtonDisplay = `<button type="button" class="btn btn-primary btn-lg" style="font-size: 13px;"> <img src="https://webstockreview.net/images250_/instagram-clipart-cool-3.png" alt="" style="width: 15px"> Lit!</button>` } else {
-        sourceTweetData[tweetIndex].likeButtonDisplay = `<button type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://webstockreview.net/images250_/instagram-clipart-cool-3.png" alt="" style="width: 15px"> Like it?</button>`;
+        sourceTweetData[tweetIndex].likeButtonDisplay = `<button type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> Like it?</button>`;
     };
     render(sourceTweetData);
 };
