@@ -28,23 +28,11 @@ let pushTweet = () => {
         }).join(" ");
     };
     let abc = textArea.value;
-    // if (abc.length > 0) {
-    //     console.log("abc >0");
-    //     for (let i = 0; i < abc.length; i = i + 1) {
-    //         abc[i] = abc[i].replace(/@(\S+)/,
-    //             '<a href="">@$1</a>');
-    //         console.log("replace");
-    //     }
-    // };
-    // if (abc.length > 0) {
-    //     console.log("abc >0");
-    //     for (let i = 0; i < abc.length; i = i + 1) {
-    //         abc[i] = abc[i].replace(/\b@/g,
-    //             '<a href="">@$1</a>');
-    //         console.log("replace");
-    //     }
-    // };
-    let contentTweet = abc;
+    let contentTweet;
+    if (abc.length > 0) {
+        contentTweet = abc.replace(/@(\S+)/,
+            '<a href="">$&</a>');
+    };
     let aTweet = {
         id: id += 1,
         contents: contentTweet,
