@@ -109,28 +109,7 @@ let disLike = (TweetID) => {
     };
     render(sourceTweetData);
 };
-let comment = (originID) => {
-    let originalComment = sourceTweetData.find(tweet => tweet.id == originID);
-    let newComment = prompt('Lets comment something:');
-    let newCommentObject = {
-        id: id,
-        name: "elon musk",
-        email: "@elonmusk",
-        content: newComment,
-        originID: originID,
-        originContent: originalComment.contents,
-        likestatus,
-        likeButtonDisplay,
-        dislikestatus,
-        disLikeButtonDisplay,
-        tagArray,
-        tag
-    }
-    originalComment.comments.push(newCommentObject);
-    render(sourceTweetData);
-    id++
-    console.log("reply");
-}
+
 
 let tagInputPopUp = () => {
     let displaytaginput = `<div class=" row no-gutters pl-3 pr-3 pb-3">
@@ -160,7 +139,7 @@ let reTweetInputPopUp = (tweetID) => {
 };
 
 let reTweetInputPopUpforOriginal = (tweetID) => {
-    let displayretweetinput = `<div class=" row no-gutters p-4">
+    let displayretweetinput = `<div class=" row no-gutters mt-3">
     <input id="reTweetInput" type="text " class="p-0 pl-3 mr-3" style="width: 70%; height: 35px; border-radius: 10px; border: 1px solid lightgrey; " placeholder="Add comment" maxlength="256">
     </input>
     <button onclick="shareTweet(${tweetID})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;width: 10%;">Done</button>
@@ -168,15 +147,62 @@ let reTweetInputPopUpforOriginal = (tweetID) => {
     document.getElementById("reTweetInputDisplayforOriginal").innerHTML = displayretweetinput;
 };
 
-// let tagUser = (doc) => {
-//     let entries = doc.querySelectorAll('div#tweetContents'),
-//         i;
-//     if (entries.length > 0) {
-//         for (i = 0; i < entries.length; i = i + 1) {
-//             entries[i].innerHTML = entries[i].innerHTML.replace(/@(\S+)/, '<a href="">@$1</a>');
-//         }
-//     }
-// };
+let commentInputPopUp = (tweetID) => {
+    let displayretweetinput = `<div class=" row no-gutters p-4">
+    <input id="commentInput" type="text " class="p-0 pl-3 mr-3" style="width: 70%; height: 35px; border-radius: 10px; border: 1px solid lightgrey; " placeholder="Add comment" maxlength="256">
+    </input>
+    <button onclick="comment(${tweetID})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;width: 10%;">Done</button>
+</div>`;
+    document.getElementById("reTweetInputDisplay").innerHTML = displayretweetinput;
+};
+
+let comment = () => {
+    let tweetComment = document.getElementById("commentInput").value;
+    let displaycomment = `<div class=" row no-gutters pl-4 pt-3 m-0 pb-0">Comment(s)
+    </div>
+    <div class=" row no-gutters" style="border-top: 1px solid lightgray;">
+        <div class="col-md-4 pt-2">
+            <div class=" d-flex">
+                <div class="col-4 pr-0"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSzCUrdNcBGV1DkgZrDxnb_alfTpdyVh_wVzYcPRPkd4xGtEZyc" class="card-img" alt="..." style="width: 100%; border-radius: 50px;"></div>
+                <div class="col-8">
+                    <h5 class="card-title ">Some body</h5>
+                    <h6 class="card-title ">@someone</h6>
+                </div>
+            </div>
+            <div class="pl-4 pt-2">
+                <div class="">
+                    <button type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://webstockreview.net/images250_/instagram-clipart-cool-3.png" alt="" style="width: 15px"> Lit!</button>
+                    <button type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://i.pinimg.com/originals/bf/7c/97/bf7c97be8f1b714b588642446c7a180c.gif" alt="" style="width: 15px;"> Trash!</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 pt-2">
+            <p class="card-text ">${tweetComment}</p>
+        </div>
+    </div>`
+    document.getElementById("reTweetInputDisplay").innerHTML = displaycomment;
+    // let originalComment = sourceTweetData.find(tweet => tweet.id == originID);
+    // let newComment = prompt('Lets comment something:');
+    // let newCommentObject = {
+    //     id: id,
+    //     name: "elon musk",
+    //     email: "@elonmusk",
+    //     content: newComment,
+    //     originID: originID,
+    //     originContent: originalComment.contents,
+    //     likestatus,
+    //     likeButtonDisplay,
+    //     dislikestatus,
+    //     disLikeButtonDisplay,
+    //     tagArray,
+    //     tag
+    // }
+    // originalComment.comments.push(newCommentObject);
+    // render(sourceTweetData);
+    // id++
+    // console.log("reply");
+
+}
 
 // wrong part was because you pass the second argument from shareTweet, 
 //when you pass the parentsId, and back to render, 
@@ -184,11 +210,11 @@ let reTweetInputPopUpforOriginal = (tweetID) => {
 //even though there are retweets and original tweet mix in the list 
 //so i remove the second argeuemtn and when we render, it will distinguish its retweet or original tweet. not from shareTWeet or pushTweet function 
 let render = (array) => {
-    document.getElementById("TweetInput").value = "";
-    let Originaltweetdisplay = array.map((item) => {
-        if (item.parentsid) {
-            let ParentsTweet = sourceTweetData.find((e) => e.id === item.parentsid)
-            return `
+        document.getElementById("TweetInput").value = "";
+        let Originaltweetdisplay = array.map((item) => {
+            if (item.parentsid) {
+                let ParentsTweet = sourceTweetData.find((e) => e.id === item.parentsid)
+                return `
               <div><div class="card m-3 pb-3" style="border-radius: 15px;">
                   <div class=" row no-gutters ">
                       <div class="col-md-2 pl-4 pt-3">
@@ -208,13 +234,14 @@ let render = (array) => {
                           <div class="">
                           <span id="likeButton" onclick="likeTweet(${item.id})">${item.likeButtonDisplay}</span>
                           <span id="disLikeButton" onclick="disLike(${item.id})">${item.disLikeButtonDisplay}</span>
-                              <button onclick="comment(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Reply</button>
+                              <button onclick="commentInputPopUp(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Reply</button>
                               <button onclick="reTweetInputPopUp(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Everyone should see this</button>                                  
                               <button onclick="deleteTweet(${item.id})"type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://cdn1.iconfinder.com/data/icons/ios-and-android-line-set-2/52/delete__remove__trash__dustbin-512.png" alt="" style="width: 15px"> Delete</button>
                           </div>
                       </div>
                       <div id="reTweetInputDisplay" style="width: 100%;">
                       </div>
+                      <div id="commentSection"></div>
                   </div>
                   <div class=" row no-gutters ">
                       <div class="col-md-1 d-flex justify-content-center pt-4">
@@ -244,11 +271,12 @@ let render = (array) => {
                           </div>
                           <div id="reTweetInputDisplayforOriginal" style="width: 100%;">
                           </div>
+                          <div id="commentSection"></div>
                       </div>
                   </div>
                   </div></div>`
-        } else {
-            return `
+            } else {
+                return `
                   <div class="card m-3 pb-3" style="border-radius: 15px;">
                       <div class=" row no-gutters ">
                           <div class="col-md-2 pl-4 pt-3">
@@ -268,18 +296,18 @@ let render = (array) => {
                               <div class="">
                               <span id="likeButton" onclick="likeTweet(${item.id})">${item.likeButtonDisplay}</span>
                               <span id="disLikeButton" onclick="disLike(${item.id})">${item.disLikeButtonDisplay}</span>
-                              <button onclick="comment(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Reply</button>
+                              <button onclick="commentInputPopUp(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Reply</button>
                                   <button onclick="reTweetInputPopUp(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Everyone should see this</button>
                                   <button onclick="deleteTweet(${item.id})"type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://cdn1.iconfinder.com/data/icons/ios-and-android-line-set-2/52/delete__remove__trash__dustbin-512.png" alt="" style="width: 15px"> Delete</button>
                                 </div>
                           </div>
                           <div id="reTweetInputDisplay" style="width: 100%;">
                           </div>
-                      </div>
+                          <div id="commentSection"></div></div>
                   </div>`
-        };
-    }).join("");
-    // console.log(Originaltweetdisplay);
-    document.getElementById("tweetdisplayarea").innerHTML = Originaltweetdisplay;
-    // let entries = document.querySelectorAll('div#tweetContents');
-}
+            };
+        }).join("");
+        // console.log(Originaltweetdisplay);
+        document.getElementById("tweetdisplayarea").innerHTML = Originaltweetdisplay;
+        // let entries = document.querySelectorAll('div#tweetContents');
+    } // let entries = document.querySelectorAll('div#tweetContents');
