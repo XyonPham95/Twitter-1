@@ -159,6 +159,15 @@ let reTweetInputPopUp = (tweetID) => {
     document.getElementById("reTweetInputDisplay").innerHTML = displayretweetinput;
 };
 
+let reTweetInputPopUpforOriginal = (tweetID) => {
+    let displayretweetinput = `<div class=" row no-gutters p-4">
+    <input id="reTweetInput" type="text " class="p-0 pl-3 mr-3" style="width: 70%; height: 35px; border-radius: 10px; border: 1px solid lightgrey; " placeholder="Add comment" maxlength="256">
+    </input>
+    <button onclick="shareTweet(${tweetID})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;width: 10%;">Done</button>
+</div>`;
+    document.getElementById("reTweetInputDisplayforOriginal").innerHTML = displayretweetinput;
+};
+
 // let tagUser = (doc) => {
 //     let entries = doc.querySelectorAll('div#tweetContents'),
 //         i;
@@ -229,11 +238,11 @@ let render = (array) => {
                               <div class="">
                               <span id="likeButton" onclick="likeTweet(${ParentsTweet.id})">${ParentsTweet.likeButtonDisplay}</span>
                               <span id="disLikeButton" onclick="disLike(${ParentsTweet.id})">${ParentsTweet.disLikeButtonDisplay}</span>
-                              <button onclick="reTweetInputPopUp(${ParentsTweet.id})"type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Reply</button>
-                                  <button onclick="shareTweet(${ParentsTweet.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Everyone should see this</button>
+                              <button onclick="reTweetInputPopUpforOriginal(${ParentsTweet.id})"type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Reply</button>
+                                  <button onclick="reTweetInputPopUpforOriginal(${ParentsTweet.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Everyone should see this</button>
                               </div>
                           </div>
-                          <div id="reTweetInputDisplay" style="width: 100%;">
+                          <div id="reTweetInputDisplayforOriginal" style="width: 100%;">
                           </div>
                       </div>
                   </div>
