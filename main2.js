@@ -113,22 +113,15 @@ let likeTweet = TweetID => {
   render(sourceTweetData);
 };
 
-let disLike = TweetID => {
-  console.log("trigger dislike");
-  let tweetIndex = sourceTweetData.findIndex(item => item.id === TweetID);
-  sourceTweetData[tweetIndex].dislikestatus = !sourceTweetData[tweetIndex]
-    .dislikestatus;
-  // console.log(sourceTweetData);
-  if (sourceTweetData[tweetIndex].dislikestatus) {
-    sourceTweetData[
-      tweetIndex
-    ].disLikeButtonDisplay = `<button type="button" class="btn btn-primary btn-lg" style="font-size: 13px;"> <img src="https://i.pinimg.com/originals/bf/7c/97/bf7c97be8f1b714b588642446c7a180c.gif" alt="" style="width: 15px"> Trash!</button>`;
-  } else {
-    sourceTweetData[
-      tweetIndex
-    ].disLikeButtonDisplay = `<button type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> Dislike?</button>`;
-  }
-  render(sourceTweetData);
+let likeTweet = (TweetID) => {
+    console.log("trigger like");
+    let tweetIndex = sourceTweetData.findIndex(item => item.id === TweetID);
+    sourceTweetData[tweetIndex].likestatus = !sourceTweetData[tweetIndex].likestatus;
+    // console.log(sourceTweetData);
+    if (sourceTweetData[tweetIndex].likestatus) { sourceTweetData[tweetIndex].likeButtonDisplay = `<button type="button" class="btn btn-primary btn-lg" style="font-size: 13px;"> <img src="https://webstockreview.net/images250_/instagram-clipart-cool-3.png" alt="" style="width: 15px"> Lit!</button>` } else {
+        sourceTweetData[tweetIndex].likeButtonDisplay = `<button type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> Like it?</button>`;
+    };
+    render(sourceTweetData);
 };
 
 let comment = TweetID => {
