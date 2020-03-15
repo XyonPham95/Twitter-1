@@ -109,6 +109,28 @@ let disLike = (TweetID) => {
     };
     render(sourceTweetData);
 };
+let comment = (originID) => {
+    let originalComment = sourceTweetData.find(tweet => tweet.id == originID);
+    let newComment = prompt('Lets comment something:');
+    let newCommentObject = {
+        id: id,
+        name: "elon musk",
+        email: "@elonmusk",
+        content: newComment,
+        originID: originID,
+        originContent: originalComment.contents,
+        likestatus,
+        likeButtonDisplay,
+        dislikestatus,
+        disLikeButtonDisplay,
+        tagArray,
+        tag
+    }
+    originalComment.comments.push(newCommentObject);
+    render(sourceTweetData);
+    id++
+    console.log("reply")
+}
 
 let tagInputPopUp = () => {
     let displaytaginput = `<div class=" row no-gutters pl-3 pr-3 pb-3">
