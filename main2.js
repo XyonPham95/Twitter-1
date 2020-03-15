@@ -56,10 +56,11 @@ let pushTweet = () => {
 
 
 let shareTweet = (originaltweetid) => {
-    console.log(originaltweetid);
+    let tweetContents = document.getElementById("reTweetInput").value;
+    console.log(tweetContents);
     let aTweet = {
         id: id += 1,
-        contents: "This is a reTweet",
+        contents: tweetContents,
         name: "elon musk",
         email: "@elonmusk",
         likestatus,
@@ -71,6 +72,7 @@ let shareTweet = (originaltweetid) => {
         tag
     };
     sourceTweetData.unshift(aTweet);
+    document.getElementById("reTweetInputDisplay").innerHTML = "";
     console.log(sourceTweetData);
     console.log("đã push dc retweet, cb chạy render");
     render(sourceTweetData);
@@ -108,7 +110,7 @@ let disLike = (TweetID) => {
     render(sourceTweetData);
 };
 
-let tagInoutPopUp = () => {
+let tagInputPopUp = () => {
     let displaytaginput = `<div class=" row no-gutters pl-3 pr-3 pb-3">
     <input id="tagtext" type="text" class="pl-3" style="width: 100%;height: 40px; border-radius: 10px; border: 1px solid lightgrey;" placeholder="Tag(s) should be a continuous set of characters and seperated by a space" maxlength="256">
     </input>
@@ -124,6 +126,15 @@ let searchTag = (text) => {
     let tweetWithTag = tweetWithTagNotNull.filter((item) => item.tagArray.some((value) => value == text));
     // console.log(tweetWithTag);
     render(tweetWithTag);
+};
+
+let reTweetInputPopUp = (tweetID) => {
+    let displayretweetinput = `<div class=" row no-gutters p-4">
+    <input id="reTweetInput" type="text " class="p-0 pl-3 mr-3" style="width: 70%; height: 35px; border-radius: 10px; border: 1px solid lightgrey; " placeholder="Add comment" maxlength="256">
+    </input>
+    <button onclick="shareTweet(${tweetID})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;width: 10%;">Done</button>
+</div>`;
+    document.getElementById("reTweetInputDisplay").innerHTML = displayretweetinput;
 };
 
 // let tagUser = (doc) => {
@@ -223,9 +234,11 @@ let render = (array) => {
                               <span id="likeButton" onclick="likeTweet(${item.id})">${item.likeButtonDisplay}</span>
                               <span id="disLikeButton" onclick="disLike(${item.id})">${item.disLikeButtonDisplay}</span>
                               <button onclick="shareTweet(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Reply</button>
-                                  <button onclick="shareTweet(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Everyone should see this</button>
+                                  <button onclick="reTweetInputPopUp(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Everyone should see this</button>
                                   <button onclick="deleteTweet(${item.id})"type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://cdn1.iconfinder.com/data/icons/ios-and-android-line-set-2/52/delete__remove__trash__dustbin-512.png" alt="" style="width: 15px"> Delete</button>
                                 </div>
+                          </div>
+                          <div id="reTweetInputDisplay" style="width: 100%;">
                           </div>
                       </div>
                   </div>`
