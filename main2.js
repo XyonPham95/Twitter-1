@@ -204,6 +204,8 @@ let render = (array) => {
                               <button onclick="deleteTweet(${item.id})"type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://cdn1.iconfinder.com/data/icons/ios-and-android-line-set-2/52/delete__remove__trash__dustbin-512.png" alt="" style="width: 15px"> Delete</button>
                           </div>
                       </div>
+                      <div id="reTweetInputDisplay" style="width: 100%;">
+                      </div>
                   </div>
                   <div class=" row no-gutters ">
                       <div class="col-md-1 d-flex justify-content-center pt-4">
@@ -230,6 +232,8 @@ let render = (array) => {
                               <button type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Reply</button>
                                   <button onclick="shareTweet(${ParentsTweet.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Everyone should see this</button>
                               </div>
+                          </div>
+                          <div id="reTweetInputDisplay" style="width: 100%;">
                           </div>
                       </div>
                   </div>
