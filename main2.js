@@ -55,7 +55,8 @@ let pushTweet = () => {
         dislikestatus,
         disLikeButtonDisplay,
         tagArray,
-        tag
+        tag,
+        comments:[]
     };
     sourceTweetData.unshift(aTweet);
     // console.log(aTweet);
@@ -120,6 +121,30 @@ let disLike = (TweetID) => {
     render(sourceTweetData);
 };
 
+let comment= (originID)=> {
+    let originalComment = sourceTweetData.find(tweet => tweet.id == originID); 
+    let newComment = prompt('Lets comment something:'); 
+    let newCommentObject = {
+        id: id,
+        name: "elon musk",
+        email: "@elonmusk",
+        content: newComment,
+        originID: originID,
+        originContent: originalComment.contents,
+        likestatus,
+        likeButtonDisplay,
+        dislikestatus,
+        disLikeButtonDisplay,
+        tagArray,
+        tag
+    }
+    originalComment.comments.push(newCommentObject);
+    render(sourceTweetData);
+    id++
+    console.log("reply")
+}
+
+
 let tagInoutPopUp = () => {
     let displaytaginput = `<div class=" row no-gutters pl-3 pr-3 pb-3">
     <input id="tagtext" type="text" class="pl-3" style="width: 100%;height: 40px; border-radius: 10px; border: 1px solid lightgrey;" placeholder="Tag(s) should be a continuous set of characters and seperated by a space" maxlength="256">
@@ -156,6 +181,63 @@ let searchTag = (text) => {
 let render = (array) => {
     document.getElementById("TweetInput").value = "";
     let Originaltweetdisplay = array.map((item) => {
+        if(item.comments && item.comments.length>0){
+            let htmlComments = item.comments.map((comment) => {
+                return `
+                <div class="card m-3 pb-3" style="border-radius: 15px;">
+                    <div class=" row no-gutters ">
+                        <div class="col-md-2 pl-4 pt-3">
+                            <div style=" width: 75px; height: 75px; background-color: aqua; border-radius: 50px;"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSzCUrdNcBGV1DkgZrDxnb_alfTpdyVh_wVzYcPRPkd4xGtEZyc" class="card-img" alt="..." style="width: 100%; border-radius: 50px;"></div>
+                        </div>
+                        <div class="col-md-10 pl-0">
+                            <div class="card-body pl-0 pt-4 pb-0 ">
+                                <h5 id="accountname" class="card-title ">${item.name}</h5>
+                                <h6 id="accountemail" class="card-title ">${item.email}</h6>
+                            </div>
+                        </div>
+                        <div class="pl-4 pt-3">
+                            <p id="tweetContents" class="card-text text-break pr-3">${comment.content}</p>
+                            <p id="tagDisplayArea" class="card-text ">
+                                ${item.tag}</p>
+                            <p class="card-text "><small class="text-muted ">Last updated 3 mins ago</small></p>
+                            <div class="">
+                            <span id="likeButton" onclick="likeTweet(${comment.id})">${item.likeButtonDisplay}</span>
+                            <span id="disLikeButton" onclick="disLike(${comment.id})">${item.disLikeButtonDisplay}</span>
+                            <button onclick="comment(${comment.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Comment</button>
+                                <button onclick="shareTweet(${comment.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Everyone should see this</button>
+                                <button onclick="deleteTweet(${comment.id})"type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://cdn1.iconfinder.com/data/icons/ios-and-android-line-set-2/52/delete__remove__trash__dustbin-512.png" alt="" style="width: 15px"> Delete</button>
+                              </div>
+                        </div>
+                    </div>
+                </div>`}) .join("")
+    
+                return `
+                <div class="card m-3 pb-3" style="border-radius: 15px;">
+                    <div class=" row no-gutters ">
+                        <div class="col-md-2 pl-4 pt-3">
+                            <div style=" width: 75px; height: 75px; background-color: aqua; border-radius: 50px;"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSzCUrdNcBGV1DkgZrDxnb_alfTpdyVh_wVzYcPRPkd4xGtEZyc" class="card-img" alt="..." style="width: 100%; border-radius: 50px;"></div>
+                        </div>
+                        <div class="col-md-10 pl-0">
+                            <div class="card-body pl-0 pt-4 pb-0 ">
+                                <h5 id="accountname" class="card-title ">${item.name}</h5>
+                                <h6 id="accountemail" class="card-title ">${item.email}</h6>
+                            </div>
+                        </div>
+                        <div class="pl-4 pt-3">
+                            <p id="tweetContents" class="card-text text-break pr-3">${item.contents}</p>
+                            <p id="tagDisplayArea" class="card-text ">
+                                ${item.tag}</p>
+                            <p class="card-text "><small class="text-muted ">Last updated 3 mins ago</small></p>
+                            <div class="">
+                            <span id="likeButton" onclick="likeTweet(${item.id})">${item.likeButtonDisplay}</span>
+                            <span id="disLikeButton" onclick="disLike(${item.id})">${item.disLikeButtonDisplay}</span>
+                            <button onclick="comment(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Comment</button>
+                                <button onclick="shareTweet(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Everyone should see this</button>
+                                <button onclick="deleteTweet(${item.id})"type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://cdn1.iconfinder.com/data/icons/ios-and-android-line-set-2/52/delete__remove__trash__dustbin-512.png" alt="" style="width: 15px"> Delete</button>
+                              </div>
+                        </div>
+                    </div>
+                </div>`+ htmlComments;}
         if (item.parentsid) {
             let ParentsTweet = sourceTweetData.find((e) => e.id === item.parentsid)
             return `
@@ -178,7 +260,7 @@ let render = (array) => {
                           <div class="">
                           <span id="likeButton" onclick="likeTweet(${item.id})">${item.likeButtonDisplay}</span>
                           <span id="disLikeButton" onclick="disLike(${item.id})">${item.disLikeButtonDisplay}</span>
-                              <button onclick="shareTweet(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Reply</button>
+                              <button onclick="comment(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Comment</button>
                               <button onclick="shareTweet(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Everyone should see this</button>                                  
                               <button onclick="deleteTweet(${item.id})"type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://cdn1.iconfinder.com/data/icons/ios-and-android-line-set-2/52/delete__remove__trash__dustbin-512.png" alt="" style="width: 15px"> Delete</button>
                           </div>
@@ -206,7 +288,7 @@ let render = (array) => {
                               <div class="">
                               <span id="likeButton" onclick="likeTweet(${ParentsTweet.id})">${ParentsTweet.likeButtonDisplay}</span>
                               <span id="disLikeButton" onclick="disLike(${ParentsTweet.id})">${ParentsTweet.disLikeButtonDisplay}</span>
-                              <button type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Reply</button>
+                              <button onclick="comment(${ParentsTweet.id})" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Reply</button>
                                   <button onclick="shareTweet(${ParentsTweet.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Everyone should see this</button>
                               </div>
                           </div>
@@ -234,7 +316,7 @@ let render = (array) => {
                               <div class="">
                               <span id="likeButton" onclick="likeTweet(${item.id})">${item.likeButtonDisplay}</span>
                               <span id="disLikeButton" onclick="disLike(${item.id})">${item.disLikeButtonDisplay}</span>
-                              <button onclick="shareTweet(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Reply</button>
+                              <button onclick="comment(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Comment</button>
                                   <button onclick="shareTweet(${item.id})" type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;">Everyone should see this</button>
                                   <button onclick="deleteTweet(${item.id})"type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://cdn1.iconfinder.com/data/icons/ios-and-android-line-set-2/52/delete__remove__trash__dustbin-512.png" alt="" style="width: 15px"> Delete</button>
                                 </div>
@@ -243,6 +325,8 @@ let render = (array) => {
                   </div>`
         };
     }).join("");
+
+    
     // console.log(Originaltweetdisplay);
     document.getElementById("tweetdisplayarea").innerHTML = Originaltweetdisplay;
     // let entries = document.querySelectorAll('div#tweetContents');
