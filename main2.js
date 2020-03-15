@@ -129,7 +129,7 @@ let comment = (originID) => {
     originalComment.comments.push(newCommentObject);
     render(sourceTweetData);
     id++
-    console.log("reply")
+    console.log("reply");
 }
 
 let tagInputPopUp = () => {
