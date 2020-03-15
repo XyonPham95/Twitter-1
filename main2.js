@@ -5,7 +5,7 @@ let CountText = () => {
     if (TweetInputRemain === 0) {
         document.getElementById("charCount").innerHTML = `${TweetInputRemain} left`.fontcolor("red")
         alert("Dude! That's a lot of stuffs on your mind! Try Facebook instead!!!");
-    } else { document.getElementById("charCount").innerHTML = `${TweetInputRemain} left` };
+    } else { document.getElemegntById("charCount").innerHTML = `${TweetInputRemain} left` };
 }
 textArea.addEventListener("input", CountText);
 let id = 0;
