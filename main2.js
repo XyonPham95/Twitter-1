@@ -264,9 +264,9 @@ let render = (array) => {
                   </div>
                   <div class=" row no-gutters ">
                       <div class="col-md-1 d-flex justify-content-center pt-4">
-                  </div>
-                  <div class="col-md-11 pl-4 pb-4" style="border-left: solid 2px lightgray;">
-                      <div class=" row no-gutters ">
+                      </div>
+                      <div class="col-md-11 pl-4 pb-4" style="border-left: solid 2px lightgray;">
+                          <div class=" row no-gutters ">
                           <div class="col-md-2 pt-3">
                               <div style=" width: 75px; height: 75px; background-color: aqua;border-radius: 50px;"><img src="https://i.ya-webdesign.com/images/designer-vector-avatar-2.png" class="card-img" alt="..." style="width: 100%;"></div>
                           </div>
@@ -290,10 +290,10 @@ let render = (array) => {
                           </div>
                           <div id="reTweetInputDisplayforOriginal" style="width: 100%;">
                           </div>
-                          <div id="commentSection"></div>
                       </div>
                   </div>
-                  </div></div>`
+                  </div>
+                  </div><div id="commentSection"></div>`
             } else {
                 return `
                   <div class="card m-3 pb-3" style="border-radius: 15px;">
@@ -322,8 +322,8 @@ let render = (array) => {
                           </div>
                           <div id="reTweetInputDisplay" style="width: 100%;">
                           </div>
-                          <div id="commentSection"></div></div>
-                  </div>`
+                  </div><div id="commentSection"></div></div>
+                  `
             };
 
         }).join("");
