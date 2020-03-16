@@ -17,6 +17,8 @@ let dislikestatus = false;
 let disLikeButtonDisplay = `<button type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> Dislike?</button>`
 let tag = "";
 let tagArray = [];
+let commenttext = [];
+let displaycomment;
 
 let pushTweet = () => {
     // let parentsid = null;
@@ -43,7 +45,8 @@ let pushTweet = () => {
         dislikestatus,
         disLikeButtonDisplay,
         tagArray,
-        tag
+        tag,
+        commenttext
     };
     sourceTweetData.unshift(aTweet);
     // console.log(aTweet);
@@ -69,7 +72,8 @@ let shareTweet = (originaltweetid) => {
         disLikeButtonDisplay,
         parentsid: originaltweetid,
         tagArray,
-        tag
+        tag,
+        comment
     };
     sourceTweetData.unshift(aTweet);
     document.getElementById("reTweetInputDisplay").innerHTML = "";
@@ -156,52 +160,41 @@ let commentInputPopUp = (tweetID) => {
     document.getElementById("reTweetInputDisplay").innerHTML = displayretweetinput;
 };
 
-let comment = () => {
+let comment = (tweetid) => {
+    let index = sourceTweetData.findIndex((item) => item.id === tweetid);
+    console.log(index);
     let tweetComment = document.getElementById("commentInput").value;
-    let displaycomment = `<div class=" row no-gutters pl-4 pt-3 m-0 pb-0">Comment(s)
-    </div>
-    <div class=" row no-gutters" style="border-top: 1px solid lightgray;">
-        <div class="col-md-4 pt-2">
-            <div class=" d-flex">
-                <div class="col-4 pr-0"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSzCUrdNcBGV1DkgZrDxnb_alfTpdyVh_wVzYcPRPkd4xGtEZyc" class="card-img" alt="..." style="width: 100%; border-radius: 50px;"></div>
-                <div class="col-8">
-                    <h5 class="card-title ">Some body</h5>
-                    <h6 class="card-title ">@someone</h6>
-                </div>
-            </div>
-            <div class="pl-4 pt-2">
-                <div class="">
-                    <button type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://webstockreview.net/images250_/instagram-clipart-cool-3.png" alt="" style="width: 15px"> Lit!</button>
-                    <button type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://i.pinimg.com/originals/bf/7c/97/bf7c97be8f1b714b588642446c7a180c.gif" alt="" style="width: 15px;"> Trash!</button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-8 pt-2">
-            <p class="card-text ">${tweetComment}</p>
-        </div>
-    </div>`
-    document.getElementById("reTweetInputDisplay").innerHTML = displaycomment;
-    // let originalComment = sourceTweetData.find(tweet => tweet.id == originID);
-    // let newComment = prompt('Lets comment something:');
-    // let newCommentObject = {
-    //     id: id,
-    //     name: "elon musk",
-    //     email: "@elonmusk",
-    //     content: newComment,
-    //     originID: originID,
-    //     originContent: originalComment.contents,
-    //     likestatus,
-    //     likeButtonDisplay,
-    //     dislikestatus,
-    //     disLikeButtonDisplay,
-    //     tagArray,
-    //     tag
-    // }
-    // originalComment.comments.push(newCommentObject);
-    // render(sourceTweetData);
-    // id++
-    // console.log("reply");
-
+    console.log(tweetComment);
+    let newComment = sourceTweetData[index].commenttext;
+    console.log(sourceTweetData[index].commenttext);
+    newComment.push(tweetComment);
+    console.log(newComment);
+    // let displaycomment = newComment.map((item) => {
+    //     return `<div class=" row no-gutters pl-4 pt-3 m-0 pb-0">Comment(s)
+    // </div>
+    // <div class=" row no-gutters" style="border-top: 1px solid lightgray;">
+    //     <div class="col-md-4 pt-2">
+    //         <div class=" d-flex">
+    //             <div class="col-4 pr-0"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSzCUrdNcBGV1DkgZrDxnb_alfTpdyVh_wVzYcPRPkd4xGtEZyc" class="card-img" alt="..." style="width: 100%; border-radius: 50px;"></div>
+    //             <div class="col-8">
+    //                 <h5 class="card-title ">Some body</h5>
+    //                 <h6 class="card-title ">@someone</h6>
+    //             </div>
+    //         </div>
+    //         <div class="pl-4 pt-2">
+    //             <div class="">
+    //                 <button type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://webstockreview.net/images250_/instagram-clipart-cool-3.png" alt="" style="width: 15px"> Lit!</button>
+    //                 <button type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://i.pinimg.com/originals/bf/7c/97/bf7c97be8f1b714b588642446c7a180c.gif" alt="" style="width: 15px;"> Trash!</button>
+    //             </div>
+    //         </div>
+    //     </div>
+    //     <div class="col-md-8 pt-2">
+    //         <p class="card-text ">${item}</p>
+    //     </div>
+    // </div>`
+    // }).join("");
+    // document.getElementById("reTweetInputDisplay").innerHTML = displaycomment;
+    render(sourceTweetData);
 }
 
 // wrong part was because you pass the second argument from shareTweet, 
@@ -212,6 +205,32 @@ let comment = () => {
 let render = (array) => {
         document.getElementById("TweetInput").value = "";
         let Originaltweetdisplay = array.map((item) => {
+            if (item.commenttext != null) {
+                displaycomment = item.commenttext.map((item2) => {
+                    return `<div class=" row no-gutters pl-4 pt-3 m-0 pb-0">Comment(s)
+            </div>
+            <div class=" row no-gutters" style="border-top: 1px solid lightgray;">
+                <div class="col-md-4 pt-2">
+                    <div class=" d-flex">
+                        <div class="col-4 pr-0"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSzCUrdNcBGV1DkgZrDxnb_alfTpdyVh_wVzYcPRPkd4xGtEZyc" class="card-img" alt="..." style="width: 100%; border-radius: 50px;"></div>
+                        <div class="col-8">
+                            <h5 class="card-title ">Some body</h5>
+                            <h6 class="card-title ">@someone</h6>
+                        </div>
+                    </div>
+                    <div class="pl-4 pt-2">
+                        <div class="">
+                            <button type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://webstockreview.net/images250_/instagram-clipart-cool-3.png" alt="" style="width: 15px"> Lit!</button>
+                            <button type="button" class="btn btn-outline-primary btn-lg" style="font-size: 13px;"> <img src="https://i.pinimg.com/originals/bf/7c/97/bf7c97be8f1b714b588642446c7a180c.gif" alt="" style="width: 15px;"> Trash!</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 pt-2">
+                    <p class="card-text ">${item2}</p>
+                </div>
+            </div>`
+                }).join("");
+            };
             if (item.parentsid) {
                 let ParentsTweet = sourceTweetData.find((e) => e.id === item.parentsid)
                 return `
@@ -306,8 +325,10 @@ let render = (array) => {
                           <div id="commentSection"></div></div>
                   </div>`
             };
+
         }).join("");
         // console.log(Originaltweetdisplay);
         document.getElementById("tweetdisplayarea").innerHTML = Originaltweetdisplay;
+        document.getElementById("commentSection").innerHTML = displaycomment;
         // let entries = document.querySelectorAll('div#tweetContents');
     } // let entries = document.querySelectorAll('div#tweetContents');
